@@ -7,8 +7,8 @@ public class Test1 {
 
 	@Test
 	public void test() {
-		assertEquals(1, Class1.return1());
-		assertEquals(2, Class1.return1());
+		assertEquals(1, Class2.return2());
+		assertEquals(2, Class2.return2());
 	}
 
 }
