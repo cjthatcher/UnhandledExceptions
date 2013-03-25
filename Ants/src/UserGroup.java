@@ -6,6 +6,11 @@ public class UserGroup
 	private String name;
    
 	private List<AccessRight> listOfRights;
+
+	public UserGroup(List<AccessRight> rights)
+	{
+		listOfRights = rights;
+	}
 	
 	String getName()
 	{
