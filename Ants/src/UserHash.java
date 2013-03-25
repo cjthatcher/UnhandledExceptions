@@ -7,7 +7,7 @@ public class UserHash
 	private HashMap<String, User> userData;
 	private static UserHash instance=null;
 	
-	private HashMap<String, User>getUserData()
+	HashMap<String, User> getUserData()
 	{
 		return userData;
 	}
