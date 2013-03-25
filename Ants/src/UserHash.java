@@ -7,6 +7,11 @@ public class UserHash
 	private HashMap<String, User> userData;
 	private static UserHash instance=null;
 	
+	private HashMap<String, User>getUserData()
+	{
+		return userData;
+	}
+	
 	protected UserHash()
 	{
 		AccessRight rights1=new AccessRight("Right1");
