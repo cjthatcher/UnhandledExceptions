@@ -3,10 +3,12 @@ import java.util.Map;
 
  public class Authenticator
  {
-	 Map userMap = new HashMap<String, User>();
+	 userHash uHash = userHash.getIstance();
 	 
      public String login(String userName, String password)
      {
+    	 userMap = uHash.getHash();
+    	 
     	 if (userMap.containsKey(userName))
     	 {
     		 User temp = (User) userMap.get(userName);
