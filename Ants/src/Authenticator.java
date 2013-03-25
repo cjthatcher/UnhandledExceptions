@@ -19,7 +19,7 @@ import java.util.Map;
     			 String accessLevel = Integer.toString(s.getAccessLevel());
     			 
     			 StringBuilder sb = new StringBuilder();
-    			 sb.append(String.format("%s successfully logged in at %s", name, time));
+    			 sb.append(String.format("%s successfully logged in at %s with access level %s", name, time, accessLevel));
     			 return sb.toString();
     		 }
     		 else
