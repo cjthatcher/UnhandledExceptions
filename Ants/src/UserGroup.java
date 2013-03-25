@@ -3,7 +3,27 @@ import java.util.List;
 
 public class UserGroup
 {
-   public String name;
+	private String name;
    
-   List<AccessRight> listOfRights;
+	private List<AccessRight> listOfRights;
+	
+	String getName()
+	{
+		return name;
+	}
+	
+	public void setName(String name)
+	{
+		this.name=name;
+	}
+	
+	public List<AccessRight> getList()
+	{
+		if(listOfRights.size()>0)
+		{
+			return listOfRights;
+		}
+		return null;
+	}
+	
 }
