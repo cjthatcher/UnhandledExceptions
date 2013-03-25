@@ -18,12 +18,19 @@ import java.util.Map;
     			 String time = s.getTime().toString();
     			 String accessLevel = Integer.toString(s.getAccessLevel());
     			 
-    			 
-    			 //successfully logged in
+    			 StringBuilder sb = new StringBuilder();
+    			 sb.append(String.format("%s successfully logged in at %s", name, time));
+    			 return sb.toString();
+    		 }
+    		 else
+    		 {
+    			 String name = String.format("%s %s", temp.getFirstName(), temp.getLastName());
+    			 String message = String.format("Password Incorrect. You provided %s", name);
+    			 return message;
     		 }
     	 }
-    	 return "Shutup!";
-
+    	 
+    	 return "User does not exist";
      }
  
  
