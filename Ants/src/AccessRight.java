@@ -11,4 +11,5 @@ public class AccessRight
     {
     	this.label=label;
     }
+    
 }
