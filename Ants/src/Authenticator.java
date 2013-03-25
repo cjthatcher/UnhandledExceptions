@@ -3,10 +3,11 @@ import java.util.Map;
 
  public class Authenticator
  {
-	 UserHash uHash = UserHash.getInstance();
-	 
+
      public String login(String userName, String password)
      {
+    	 UserHash uHash = UserHash.getInstance();
+    	 
     	 HashMap<String, User> userMap = uHash.getUserData();
     	 
     	 if (userMap.containsKey(userName))
