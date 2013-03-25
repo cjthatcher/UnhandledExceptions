@@ -9,6 +9,15 @@ public class User {
     private String lastName;
     private List<UserGroup> groups;
     
+    public User(String username, String first, String last, String password, List<UserGroup> groups)
+    {
+    	this.username = username;
+    	this.firstName = first;
+    	this.lastName = last;
+    	this.password = password;
+    	this.groups = groups;
+    }
+    
 	public String getUsername() {
 		return username;
 	}
