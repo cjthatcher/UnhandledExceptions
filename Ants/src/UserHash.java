@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class UserHash 
 {
-	private HashMap<String, User> userData;
+	private HashMap<String, User> userData=new HashMap<String, User>();
 	private static UserHash instance=null;
 	
 	protected UserHash()
