@@ -43,27 +43,10 @@ public class UserHash
 		UserGroup group3=new UserGroup(list3);
 		UserGroup group4=new UserGroup(list4);
 		
-		List<UserGroup> u1=new ArrayList<UserGroup>();
-		List<UserGroup> u2=new ArrayList<UserGroup>();
-		List<UserGroup> u3=new ArrayList<UserGroup>();
-		List<UserGroup> u4=new ArrayList<UserGroup>();
-		
-		u1.add(group1);
-		u1.add(group2);
-		
-		u2.add(group1);
-		u2.add(group3);
-		
-		u3.add(group2);
-		u3.add(group4);
-		
-		u4.add(group3);
-		u4.add(group4);
-		
-		userData.put("georgeMoney", new User("georgeMoney", "George", "Washington", "redcoatsSuck", u1));
-		userData.put("AbrahamLincoln", new User("awesomeAbe", "Abraham", "Lincoln", "vampires", u2));
-		userData.put("TheodoreRoosevelt", new User("Teddy", "Theodore", "Roosevelt", "idowhatiwant", u3));
-		userData.put("ThomasJefferson", new User("lil T", "Thomas", "Jefferson", "babyMaker", u4));
+		userData.put("georgeMoney", new User("georgeMoney", "George", "Washington", "redcoatsSuck", group1));
+		userData.put("AbrahamLincoln", new User("awesomeAbe", "Abraham", "Lincoln", "vampires", group2));
+		userData.put("TheodoreRoosevelt", new User("Teddy", "Theodore", "Roosevelt", "idowhatiwant", group3));
+		userData.put("ThomasJefferson", new User("lil T", "Thomas", "Jefferson", "babyMaker", group4));
 	}
 	
 	public static UserHash getInstance()

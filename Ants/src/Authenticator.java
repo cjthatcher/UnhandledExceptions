@@ -25,7 +25,7 @@ import java.util.Map;
     			 
     			 StringBuilder sb = new StringBuilder();
     			 s.setUser(temp);
-    			 s.setAccessLevel(temp.getGroups().size());
+    			 s.setAccessLevel(temp.getGroup().getRights().size());
     			 sb.append(String.format("%s successfully logged in at %s with access level %s", name, time, accessLevel));
     			 return sb.toString();
     		 }

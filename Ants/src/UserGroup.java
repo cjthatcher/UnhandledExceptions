@@ -22,7 +22,7 @@ public class UserGroup
 		this.name=name;
 	}
 	
-	public List<AccessRight> getList()
+	public List<AccessRight> getRights()
 	{
 		if(listOfRights.size()>0)
 		{

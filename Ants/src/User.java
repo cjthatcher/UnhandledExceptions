@@ -7,15 +7,15 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private List<UserGroup> groups;
+    private UserGroup group;
     
-    public User(String username, String first, String last, String password, List<UserGroup> groups)
+    public User(String username, String first, String last, String password, UserGroup group)
     {
     	this.username = username;
     	this.firstName = first;
     	this.lastName = last;
     	this.password = password;
-    	this.groups = groups;
+    	this.group = group;
     }
     
 	public String getUsername() {
@@ -50,12 +50,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public List<UserGroup> getGroups() {
-		return groups;
+	public UserGroup getGroup() {
+		return group;
 	}
 
-	public void setGroups(List<UserGroup> groups) {
-		this.groups = groups;
+	public void setGroup(UserGroup group) {
+		this.group = group;
 	}
 
 	public boolean check(String username, String password)
