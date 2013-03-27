@@ -60,7 +60,7 @@ public class UserHash
 		u4.add(group3);
 		u4.add(group4);
 		
-		userData.put("GeorgeWashington", new User("georgeMoney", "George", "Washington", "redcoatsSuck", u1));
+		userData.put("georgeMoney", new User("georgeMoney", "George", "Washington", "redcoatsSuck", u1));
 		userData.put("AbrahamLincoln", new User("awesomeAbe", "Abraham", "Lincoln", "vampires", u2));
 		userData.put("TheodoreRoosevelt", new User("Teddy", "Theodore", "Roosevelt", "idowhatiwant", u3));
 		userData.put("ThomasJefferson", new User("lil T", "Thomas", "Jefferson", "babyMaker", u4));

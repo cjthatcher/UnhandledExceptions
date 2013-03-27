@@ -4,6 +4,7 @@ public class test {
 	{
 		Authenticator a = new Authenticator();
 		
-		a.login("georgeMoney", "redCoatsSuck");
+		System.out.println(a.login("georgeMoney", "redcoatsSuck"));
+		
 	}
 }

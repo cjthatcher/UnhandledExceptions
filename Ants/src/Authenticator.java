@@ -1,3 +1,4 @@
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import java.util.Map;
     		 {
     			 Session s = Session.getInstance();
     			 String name = String.format("%s %s", temp.getFirstName(), temp.getLastName());
+    			 Date d = s.getTime();
     			 String time = s.getTime().toString();
     			 String accessLevel = Integer.toString(s.getAccessLevel());
     			 
