@@ -22,6 +22,8 @@ public class Ground {
 		this.height = config.getBoardHeight();
 		
 		cellArray = new GroundCell[height][width];
+
+		
 	}
 
 	
