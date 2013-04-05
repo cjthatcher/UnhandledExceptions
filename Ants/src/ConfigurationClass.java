@@ -4,6 +4,12 @@ public class ConfigurationClass {
 	int boardHeight;
 	int numberOfFoodPiles;
 	int amountOfFoodPerPile;
+	int numberOfColonies;
+	float degreeOfRandomness;
+	int antLifeSpan;
+	int antBirthRate;
+	int pheromoneDecayRate;
+	
 	public int getBoardWidth() {
 		return boardWidth;
 	}
@@ -58,10 +64,5 @@ public class ConfigurationClass {
 	public void setPheromoneDecayRate(int pheromoneDecayRate) {
 		this.pheromoneDecayRate = pheromoneDecayRate;
 	}
-	int numberOfColonies;
-	float degreeOfRandomness;
-	int antLifeSpan;
-	int antBirthRate;
-	int pheromoneDecayRate;
 	
 }
