@@ -47,7 +47,13 @@ public class Ant {
 
 	public void moveDirection(){
 		Ground ground = Ground.getInstance();
-
 		
+		Position nextPosition = ground.findStrongestPheromone(col, gc, food);
+		
+		gc.loseAnt(this);
+		
+		gc = ground.cellArray[nextPosition.getX()][nextPosition.getY()];
+		gc.addAnt(this);
+
 	}
 }

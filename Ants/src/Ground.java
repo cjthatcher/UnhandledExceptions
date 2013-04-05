@@ -58,6 +58,8 @@ public class Ground {
 				}
 			}
 		}
+		
+		//Make a comparator here.
 		Arrays.sort(pherList);
 		if(pherList.size() >= 2){
 			if(hasFood){
@@ -68,8 +70,21 @@ public class Ground {
 				return pherMap.get(weakest);
 			}
 		}else if(pherList.size() == 1){
+			//If he doesnt' have food, follow it.
+			
+			//if he does have food --->
+			
+			//Make a list of all the places the ant has been since it has had food
+			//Make sure it doesn't step on those places again (avoid cycles)
+			//If he's out of viable options, just send him straight home. Mercy, right?
+			
+			//if pheromoneList.size() == 0, 
+			
+			//if has food --> 80% towards home
+			//if no food --> random as can be.
+			
 			if(hasFood){
-				
+			//No pheromones? Take an 80% chance towards home
 			}else{
 
 			}
@@ -77,11 +92,7 @@ public class Ground {
 	}
 
 	private Pheromone checkForPheromone(int x, int y, Colony col){
-		if(){
-			return null;
-		}else{
-
-		}
+		return cellArray[x][y].getColonyPheromone(col);
 	}
 }
 
