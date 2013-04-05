@@ -54,6 +54,17 @@ public class GroundCell {
 		return pheromoneList;
 	}
 	
+	public Pheromone getColonyPheromone(Colony c)
+	{
+		for (Pheromone p : pheromoneList)
+		{
+			if (p.getColony() == c)
+				return p;
+		}
+		
+		return null;
+	}
+	
 	public void setFoodPile(FoodPile fp)
 	{
 		this.foodPile = fp;
