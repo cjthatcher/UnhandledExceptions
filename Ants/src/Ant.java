@@ -44,4 +44,10 @@ public class Ant {
 		}
 		return false;
 	}
+
+	public void moveDirection(){
+		Ground ground = Ground.getInstance();
+
+		
+	}
 }
