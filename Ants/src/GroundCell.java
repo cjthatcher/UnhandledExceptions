@@ -5,7 +5,7 @@ import java.util.List;
 public class GroundCell {
 	Position p;
 	
-	Pheromone pheromone;
+	List<Pheromone> pheromoneList = new ArrayList<Pheromone>();
 	FoodPile foodPile;
 	Nest nest;
 	List<Ant> antList = new ArrayList<Ant>();
@@ -13,7 +13,7 @@ public class GroundCell {
 	public GroundCell(Position p)
 	{
 		this.p = p;
-		pheromone = null;
+		pheromoneList.clear();
 		foodPile = null;
 		nest = null;
 	}
@@ -34,14 +34,24 @@ public class GroundCell {
 		}
 	}
 	
-	public void setPheromone(Pheromone p)
+	public void addPheromone(Pheromone p)
 	{
-		this.pheromone = p;
+		Colony tempColony = p.getColony();
+		
+		for (Pheromone phero : pheromoneList)
+		{
+			if (phero.getColony() == tempColony)
+			{
+				pheromoneList.remove(phero);
+			}
+		}
+		
+		pheromoneList.add(p);
 	}
 	
-	public Pheromone getPheromone()
+	public List<Pheromone> getPheromone()
 	{
-		return pheromone;
+		return pheromoneList;
 	}
 	
 	public void setFoodPile(FoodPile fp)
