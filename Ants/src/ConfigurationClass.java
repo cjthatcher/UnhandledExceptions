@@ -9,7 +9,14 @@ public class ConfigurationClass {
 	int antLifeSpan;
 	int antBirthRate;
 	int pheromoneDecayRate;
+	int millisecondDelay;
 	
+	public int getMillisecondDelay() {
+		return millisecondDelay;
+	}
+	public void setMillisecondDelay(int millisecondDelay) {
+		this.millisecondDelay = millisecondDelay;
+	}
 	public int getBoardWidth() {
 		return boardWidth;
 	}
@@ -64,5 +71,5 @@ public class ConfigurationClass {
 	public void setPheromoneDecayRate(int pheromoneDecayRate) {
 		this.pheromoneDecayRate = pheromoneDecayRate;
 	}
-	
+
 }
