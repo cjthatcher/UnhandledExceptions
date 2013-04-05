@@ -15,7 +15,10 @@ public class FoodPile {
     
     public void decrementFood()
     {
-        foodAmount--;
+        if(foodAmount > 0)
+        {
+            foodAmount--;
+        }
     }
     
     public void setFoodAmount(int amount)
