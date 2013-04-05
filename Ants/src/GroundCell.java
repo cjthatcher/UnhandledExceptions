@@ -3,7 +3,7 @@ import java.util.List;
 
 
 public class GroundCell {
-	Position p;
+	Position position;
 	
 	List<Pheromone> pheromoneList = new ArrayList<Pheromone>();
 	FoodPile foodPile;
@@ -12,7 +12,7 @@ public class GroundCell {
 	
 	public GroundCell(Position p)
 	{
-		this.p = p;
+		this.position = p;
 		pheromoneList.clear();
 		foodPile = null;
 		nest = null;
@@ -83,6 +83,11 @@ public class GroundCell {
 	public Nest getNest()
 	{
 		return nest;
+	}
+	
+	public Position getPosition()
+	{
+		return position;
 	}
 	
 	
