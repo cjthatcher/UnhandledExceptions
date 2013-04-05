@@ -1,4 +1,67 @@
 
 public class ConfigurationClass {
-
+	int boardWidth;
+	int boardHeight;
+	int numberOfFoodPiles;
+	int amountOfFoodPerPile;
+	public int getBoardWidth() {
+		return boardWidth;
+	}
+	public void setBoardWidth(int boardWidth) {
+		this.boardWidth = boardWidth;
+	}
+	public int getBoardHeight() {
+		return boardHeight;
+	}
+	public void setBoardHeight(int boardHeight) {
+		this.boardHeight = boardHeight;
+	}
+	public int getNumberOfFoodPiles() {
+		return numberOfFoodPiles;
+	}
+	public void setNumberOfFoodPiles(int numberOfFoodPiles) {
+		this.numberOfFoodPiles = numberOfFoodPiles;
+	}
+	public int getAmountOfFoodPerPile() {
+		return amountOfFoodPerPile;
+	}
+	public void setAmountOfFoodPerPile(int amountOfFoodPerPile) {
+		this.amountOfFoodPerPile = amountOfFoodPerPile;
+	}
+	public int getNumberOfColonies() {
+		return numberOfColonies;
+	}
+	public void setNumberOfColonies(int numberOfColonies) {
+		this.numberOfColonies = numberOfColonies;
+	}
+	public float getDegreeOfRandomness() {
+		return degreeOfRandomness;
+	}
+	public void setDegreeOfRandomness(float degreeOfRandomness) {
+		this.degreeOfRandomness = degreeOfRandomness;
+	}
+	public int getAntLifeSpan() {
+		return antLifeSpan;
+	}
+	public void setAntLifeSpan(int antLifeSpan) {
+		this.antLifeSpan = antLifeSpan;
+	}
+	public int getAntBirthRate() {
+		return antBirthRate;
+	}
+	public void setAntBirthRate(int antBirthRate) {
+		this.antBirthRate = antBirthRate;
+	}
+	public int getPheromoneDecayRate() {
+		return pheromoneDecayRate;
+	}
+	public void setPheromoneDecayRate(int pheromoneDecayRate) {
+		this.pheromoneDecayRate = pheromoneDecayRate;
+	}
+	int numberOfColonies;
+	float degreeOfRandomness;
+	int antLifeSpan;
+	int antBirthRate;
+	int pheromoneDecayRate;
+	
 }
