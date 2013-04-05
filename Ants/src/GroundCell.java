@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GroundCell {
 	Position p;
@@ -5,6 +8,7 @@ public class GroundCell {
 	Pheromone pheromone;
 	FoodPile foodPile;
 	Nest nest;
+	List<Ant> antList = new ArrayList<Ant>();
 	
 	public GroundCell(Position p)
 	{
@@ -12,6 +16,22 @@ public class GroundCell {
 		pheromone = null;
 		foodPile = null;
 		nest = null;
+	}
+	
+	public void loseAnt(Ant a)
+	{
+		if (antList.contains(a))
+		{
+			antList.remove(a);
+		}
+	}
+	
+	public void addAnt(Ant a)
+	{
+		if (!antList.contains(a))
+		{
+			antList.add(a);
+		}
 	}
 	
 	public void setPheromone(Pheromone p)
