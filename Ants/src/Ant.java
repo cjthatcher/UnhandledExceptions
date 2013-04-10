@@ -81,6 +81,7 @@ public class Ant {
 		{
 			food=true;
 			gc.getFoodPile().decrementFood();
+			gc.addPheromone(new Pheromone(col, Ground.getInstance().getConfig().getPheromoneStrength(), gc));
 		}
 		
 		gc.loseAnt(this);
