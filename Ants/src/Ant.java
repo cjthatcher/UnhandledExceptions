@@ -69,6 +69,10 @@ public class Ant {
 		
 		gc = ground.cellArray[nextPosition.getX()][nextPosition.getY()];
 		gc.addAnt(this);
-
+		if(gc.getFoodPile()!=null&&(gc.getFoodPile().getFoodAmount()>0&&!food))
+		{
+			food=true;
+			gc.getFoodPile().decrementFood();
+		}
 	}
 }
