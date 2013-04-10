@@ -32,6 +32,8 @@ public class Ground {
 		this.width = config.getBoardWidth();
 		this.height = config.getBoardHeight();
 		
+		cellArray = new GroundCell[height][width];
+		
 		int numColonies = config.getNumberOfColonies();
 		int numFood = config.getNumberOfFoodPiles();
 		
@@ -78,7 +80,25 @@ public class Ground {
 			
 		}
 		
-		cellArray = new GroundCell[height][width];
+		for(Position p : foodPositions)
+		{
+			int x = p.getX();
+			int y = p.getY();
+			
+			int foodPileSize = config.getAmountOfFoodPerPile();
+			
+			cellArray[x][y].setFoodPile(new FoodPile(foodPileSize));
+		}
+		
+		for(Position p : colonyPositions)
+		{
+			int x = p.getX();
+			int y = p.getY();
+			
+			Nest tempNest = new Nest( new Colony(), cellArray[x][y]);
+			
+			cellArray[x][y].setNest(tempNest);
+		}
 
 		time=new Timer(delay, new timeListener());
 	}
