@@ -26,6 +26,14 @@ public class GroundCell {
 		}
 	}
 	
+	public void losePheromone(Pheromone p)
+	{
+		if (pheromoneList.contains(p))
+		{
+			pheromoneList.remove(p);
+		}
+	}
+	
 	public void addAnt(Ant a)
 	{
 		if (!antList.contains(a))
