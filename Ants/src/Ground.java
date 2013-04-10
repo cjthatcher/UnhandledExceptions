@@ -30,6 +30,8 @@ public class Ground {
 		int numFood = config.getNumberOfFoodPiles();
 		
 		List<Position> colonyPositions = new ArrayList<Position>();
+		List<Position> foodPositions = new ArrayList<Position>();
+		
 		
 		while(colonyPositions.size() < numColonies)
 		{
@@ -52,6 +54,20 @@ public class Ground {
 			if(inList == false)
 			{
 				colonyPositions.add(position);
+			}
+			
+		}
+		
+		while(foodPositions.size() < numFood)
+		{
+			int x = (int)(Math.random() * config.getBoardWidth());
+			int y = (int)(Math.random() * config.getBoardHeight());
+			
+			Position position = new Position(x, y);
+			
+			if(!foodPositions.contains(position))
+			{
+				foodPositions.add(position);
 			}
 			
 		}
