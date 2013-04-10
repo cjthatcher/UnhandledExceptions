@@ -2,7 +2,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -57,36 +59,48 @@ public class DrawingPane extends JPanel implements Observer{
 		
 		GroundCell[][] gcArray = ground.getCellArray();
 		
+		BufferedImage offScreen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		
+		Graphics offGraphics = offScreen.getGraphics();
+		Graphics2D off2DGraphics = (Graphics2D)offGraphics;
+		
+		off2DGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+		
+		
 		for (int y = 0; y < ground.getConfig().getBoardHeight(); y++)
 		{
 			for (int x = 0; x < ground.getConfig().getBoardWidth(); x++)
 			{
 				
 				//Draw the grey box
-				g2d.setColor(Color.gray);
-				g2d.fillRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+				off2DGraphics.setColor(Color.gray);
+				off2DGraphics.fillRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
 				
-				g2d.setColor(Color.black);
-				g2d.drawRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+				off2DGraphics.setColor(Color.black);
+				off2DGraphics.drawRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
 				
 				
 				//If it has a hive, draw that
 				if (gcArray[y][x].getNest() != null)
 				{
 					int tempColor = gcArray[y][x].getNest().getColony().getIdNumber();
-					g2d.setColor(colorMap.get(tempColor));
+					off2DGraphics.setColor(colorMap.get(tempColor));
 					
-					g2d.fillRoundRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight, boxWidth / 5, boxHeight / 5);
+					off2DGraphics.fillRoundRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight, boxWidth / 5, boxHeight / 5);
 				}
 				
 				//if it has a food pile, draw that/
 				if (gcArray[y][x].getFoodPile() != null)
 				{
-					g2d.setColor(Color.GREEN);
-					g2d.fillOval(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
-					
-					g2d.setColor(Color.BLACK);
-					g2d.drawString(Integer.toString(gcArray[y][x].getFoodPile().getFoodAmount()), x * boxWidth, (y+1) * boxHeight);
+					if (gcArray[y][x].getFoodPile().getFoodAmount() > 0)
+					{
+						off2DGraphics.setColor(Color.GREEN);
+						off2DGraphics.fillOval(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+						
+						off2DGraphics.setColor(Color.BLACK);
+						off2DGraphics.drawString(Integer.toString(gcArray[y][x].getFoodPile().getFoodAmount()), x * boxWidth, (y+1) * boxHeight);
+					}
 				}
 				
 				//if that cell has an ant draw it
@@ -94,13 +108,13 @@ public class DrawingPane extends JPanel implements Observer{
 				{
 					for (Ant a : gcArray[y][x].getAnt())
 					{
-						g2d.setColor(colorMap.get(a.getCol().getIdNumber()));
-						g2d.fillOval((x * boxWidth), (y * boxHeight),(int) (boxWidth * 0.7), (int)(boxHeight * 0.7));
+						off2DGraphics.setColor(colorMap.get(a.getCol().getIdNumber()));
+						off2DGraphics.fillOval((x * boxWidth), (y * boxHeight),(int) (boxWidth * 0.7), (int)(boxHeight * 0.7));
 						
 						if (a.isCarryingFood())
 						{
-							g2d.setColor(Color.GREEN);
-							g2d.fillOval((int)((x + 0.5) * boxWidth), (int)((y + 0.5) * boxHeight), boxWidth / 2, boxHeight / 2);
+							off2DGraphics.setColor(Color.GREEN);
+							off2DGraphics.fillOval((int)((x + 0.5) * boxWidth), (int)((y + 0.5) * boxHeight), boxWidth / 2, boxHeight / 2);
 						}
 					}
 				}
@@ -114,18 +128,22 @@ public class DrawingPane extends JPanel implements Observer{
 					
 					Pheromone p = pList.get(0);
 					
-					int alphaValue = (int) (((float)(p.getStrength() / ground.getConfig().getPheromoneStrength()) * 0.5f) * 255);
+					//int alphaValue = (int) (((float)(p.getStrength() / ground.getConfig().getPheromoneStrength()) * 0.5f) * 255);
+					
+					int alphaValue = (int)(((float)p.getStrength() / ground.getConfig().getPheromoneStrength()) * 255f);
 					
 					Color baseColor = colorMap.get(p.getColony().getIdNumber());
 					
 					Color transParent = new Color(baseColor.getRed(),baseColor.getGreen(), baseColor.getBlue(), alphaValue);
 					
-					g2d.setColor(transParent);
+					off2DGraphics.setColor(transParent);
 					
-					g2d.drawOval(x * boxWidth, y * boxWidth, boxWidth / 2, boxHeight);
+					off2DGraphics.drawOval(x * boxWidth, y * boxWidth, boxWidth / 2, boxHeight);
 				}
 			}
 		}
+		
+		g2d.drawImage(offScreen, 0, 0, null);
 		
 	}
 
