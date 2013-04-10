@@ -9,12 +9,14 @@ public class Ant {
 	private Direction dir;
 	private  boolean food;
 	private List<Position> visited;
+	private boolean moved;
 
 	public Ant(Colony col, GroundCell gc){
 		this.gc = gc;
 		this.col = col;
 		visited=new ArrayList<Position>();
 		gc.addAnt(this);
+		moved=false;
 	}
 	
 	public List<Position> getVisited()
@@ -56,6 +58,8 @@ public class Ant {
 
 	public void moveDirection(){
 		Position p = gc.getPosition();
+		Ground ground = Ground.getInstance();
+		Position nextPosition = ground.findStrongestPheromone(this);
 		
 		int antX = p.getX();
 		int antY = p.getY();
@@ -66,27 +70,36 @@ public class Ant {
 			food = false;
 			visited.clear();
 		}
-		
+		visited.add(gc.getPosition());
 		if(food)
 		{
-			visited.add(gc.getPosition());
+			
 			gc.addPheromone(new Pheromone(col, Ground.getInstance().getConfig().getPheromoneStrength(), gc));
 		}
 		
-		Ground ground = Ground.getInstance();
-		
-		Position nextPosition = ground.findStrongestPheromone(col, gc, food, this);
-		
-		gc.loseAnt(this);
-		
-		gc = ground.cellArray[nextPosition.getY()][nextPosition.getX()];
-		gc.addAnt(this);
 		if(gc.getFoodPile()!=null&&(gc.getFoodPile().getFoodAmount()>0&&!food))
 		{
 			food=true;
 			gc.getFoodPile().decrementFood();
 		}
 		
+		gc.loseAnt(this);
+		
+		gc = ground.cellArray[nextPosition.getY()][nextPosition.getX()];
+		gc.addAnt(this);
+		
+		moved=true;
+		
 		System.out.println("Ant moved - new position = " + nextPosition.getY() + ", " + nextPosition.getX());
+	}
+	
+	boolean getMoved()
+	{
+		return moved;
+	}
+
+	void setMoved(boolean moved)
+	{
+		this.moved=moved;
 	}
 }

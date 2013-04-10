@@ -143,93 +143,75 @@ public class Ground extends Observable {
 
 	}
 
-	public Position findStrongestPheromone(Colony col, GroundCell gc,
-			boolean hasFood, Ant ant) {
-		int orig_x = gc.getPosition().getX();
-		int orig_y = gc.getPosition().getY();
-		List<Pheromone> pherList = new ArrayList<Pheromone>();
-		Map<Pheromone, Position> pherMap = new HashMap<Pheromone, Position>();
-
-		for (int i = -1; i <= 1; ++i) {
-			int temp_x = orig_x + i;
-			if (temp_x < 0 || temp_x >= width)
-				continue;
-			else {
-				for (int j = -1; j <= 1; ++j) {
-					int temp_y = orig_y + j;
-					if (temp_y < 0 || temp_y >= height) {
-						continue;
-					} else if (temp_x == orig_x && temp_y == orig_y) {
-						continue;
-					} else {
-						Pheromone temp_p = checkForPheromone(temp_x, temp_y,
-								col);
-						if (temp_p != null) {
-							pherList.add(temp_p);
-							pherMap.put(temp_p, new Position(temp_x, temp_y));
-						}
-					}
-				}
-			}
-		}
-
-		// Make a comparator here.
-		Collections.sort(pherList, new PheromoneComparator());
-		
-		if (pherList.size() >= 2) {
-			if (hasFood) {
-				Pheromone strongest = pherList.get(1);
-				return pherMap.get(strongest);
-			} else {
-				Pheromone weakest = pherList.get(pherList.size() - 1);
-				return pherMap.get(weakest);
-			}
-		} else if (pherList.size() == 1) {
-			// If he doesnt' have food, follow it.
-
-			// if he does have food --->
-
-			// Make a list of all the places the ant has been since it has had
-			// food
-			// Make sure it doesn't step on those places again (avoid cycles)
-			// If he's out of viable options, just send him straight home.
-			// Mercy, right?
-
-			// if pheromoneList.size() == 0,
-
-			// if has food --> 80% towards home
-			// if no food --> random as can be.
-
-			if (hasFood) {
-				// No pheromones? Take an 80% chance towards home
-				Position temp = takeStepTowardsHome(gc.getPosition(), col);
-				if (!ant.getVisited().contains(temp)) {
-					return temp;
-				}
-				
-				List<Position> tempPList = getNearby(gc.getPosition());
-				for (Position p : tempPList) {
-					if (!ant.getVisited().contains(p)) {
-						return p;
-					}
-				}
-			}
-			
-			//return pathToColony(ant);
-		} else // doesn't have food
+	public Position findStrongestPheromone(Ant ant)
+	{
+		List<Pheromone> pheromoneList=nearbyPheromone(ant);
+		Collections.sort(pheromoneList, new PheromoneComparator());
+		if(ant.isCarryingFood())
 		{
-			if (pherList != null && pherList.size() > 0) {
-				Pheromone strongest = pherList.get(0);
-				return pherMap.get(strongest);
+			if(pheromoneList.size()>0)
+			{
+				for(int i=0;i<pheromoneList.size();++i)
+				{
+					if(!ant.getVisited().contains(pheromoneList.get(i).getLocation().getPosition()))
+					{
+						return pheromoneList.get(i).getLocation().getPosition();
+					}
+				}
+				return pathToColony(ant);
+			}
+			else
+			{
+				List<Position> temp=getNearby(ant.getLocation().getPosition());
+				if(Math.random()<=config.getDegreeOfRandomness())
+				{
+					return pathToColony(ant);
+				}
+				int tempInd=(int)(Math.random()*temp.size());
+				return temp.get(tempInd);
 			}
 		}
-		
-		List<Position> temp = getNearby(gc.getPosition());
-		return temp.get((int) (Math.random() * temp.size()));
+		else
+		{
+			for(int i=0;i<pheromoneList.size();++i)
+			{
+				if(!ant.getVisited().contains(pheromoneList.get(i).getLocation().getPosition()))
+				{
+					return pheromoneList.get(i).getLocation().getPosition();
+				}
+			}
+			List<Position> temp=getNearby(ant.getLocation().getPosition());
+			int tempInd=(int)(Math.random()*temp.size());
+			return temp.get(tempInd);
+		}
 	}
-
+	
+	private List<Pheromone> nearbyPheromone(Ant ant)
+	{
+		List<Pheromone> pheromoneList=new ArrayList<Pheromone>();
+		Position antPos=ant.getLocation().getPosition();
+		for(int y=-1;y<=1;++y)
+		{
+			for(int x=-1;x<=1;++x)
+			{
+				if((y==0&&x==0)||(antPos.getX()+x<0||antPos.getX()+x>=width)||(antPos.getY()+y<0||antPos.getY()+y>=height))
+				{
+					continue;
+				}
+				for(Pheromone pher:cellArray[antPos.getY()+y][antPos.getX()+x].getPheromone())
+				{
+					if(pher.getColony()==ant.getCol())
+					{
+						pheromoneList.add(pher);
+					}
+				}
+			}
+		}
+		return pheromoneList;
+	}
+	
 	private Position pathToColony(Ant ant) {
-		Position colPos = ant.getCol().getNest().getGroundCell().getPosition();
+		Position colPos = ant.getCol().getPosition();
 		Position antPos = ant.getLocation().getPosition();
 		Position temp = new Position(antPos.getX(), antPos.getY());
 
@@ -240,100 +222,29 @@ public class Ground extends Observable {
 		}
 
 		if (colPos.getY() > antPos.getY()) {
-			temp.setPosition(temp.getX() + 1, temp.getY());
+			temp.setPosition(temp.getX(), temp.getY()+1);
 		} else if (colPos.getY() < antPos.getY()) {
-			temp.setPosition(temp.getX() - 1, temp.getY());
+			temp.setPosition(temp.getX(), temp.getY()-1);
 		}
 
 		return temp;
 	}
 
-	private Position takeStepTowardsHome(Position pos, Colony col) {
-
-		// Take a percent chance towards home -->
-
-		Position nestPosition = col.getPosition();
-		int nestX = nestPosition.getX();
-		int nestY = nestPosition.getY();
-
-		double randomX = Math.random();
-		double randomY = Math.random();
-
-		int x = 0;
-		int y = 0;
-
-		if (randomX < config.getDegreeOfRandomness()) {
-			if (pos.getX() > nestX)
-				x = -1;
-			else if (pos.getX() < nestX)
-				x = 1;
-			else
-				x = 0;
-		} else {
-			if (Math.random() < 0.5)
-				x = 0;
-			else
-				x = 1;
-		}
-
-		if (randomY < config.getDegreeOfRandomness()) {
-			if (pos.getY() > nestY)
-				x = -1;
-			else if (pos.getY() < nestY)
-				x = 1;
-			else
-				x = 0;
-		} else {
-			if (Math.random() < 0.5)
-				y = 0;
-			else
-				y = 1;
-		}
-
-		int nextX = pos.getX() + x;
-		int nextY = pos.getY() + y;
-		
-		if (nextX >= 40)
-			nextX--;
-		if (nextX < 0)
-			nextX++;
-		
-		if (nextY >= 40)
-			nextY--;
-		if (nextY < 0)
-			nextY++;
-		
-		Position temp = new Position(nextX, nextY);
-
-		return temp;
-	}
-
-	private List<Position> getNearby(Position pos) {
+	private List<Position> getNearby(Position pos) 
+	{
 		List<Position> temp = new ArrayList<Position>();
-		for (int i = -1; i <= 1; ++i) {
-			int temp_x = pos.getX() + i;
-			if (temp_x < 0 || temp_x >= width)
-				continue;
-			else {
-				for (int j = -1; j <= 1; ++j) {
-					int temp_y = pos.getY() + j;
-					if (temp_y < 0 || temp_y >= height) {
-						continue;
-					} else if (temp_x == pos.getX() && temp_y == pos.getY()) {
-						continue;
-					} else {
-						temp.add(new Position(temp_x, temp_y));
-					}
+		for(int y=-1;y<=1;++y)
+		{
+			for(int x=-1;x<=1;++x)
+			{
+				if((y==0&&x==0)||(pos.getX()+x<0||pos.getX()+x>=width)||(pos.getY()+y<0||pos.getY()+y>=height))
+				{
+					continue;
 				}
+				temp.add(new Position(pos.getX()+x, pos.getY()+y));
 			}
 		}
-
-		Collections.shuffle(temp);
 		return temp;
-	}
-
-	private Pheromone checkForPheromone(int x, int y, Colony col) {
-		return cellArray[x][y].getColonyPheromone(col);
 	}
 
 	private class timeListener implements ActionListener {
@@ -354,7 +265,24 @@ public class Ground extends Observable {
 
 					if (tempAntList != null && tempAntList.size() > 0) {
 						for (Ant a : tempAntList) {
-							a.moveDirection();
+							if(!a.getMoved())
+							{
+								a.moveDirection();
+								a.setMoved(true);
+							}
+						}
+					}
+				}
+			}
+			for (int i = 0; i < height; ++i) {
+				for (int j = 0; j < width; ++j) {
+					
+					List<Ant> tempAntList = new ArrayList<Ant>(
+							cellArray[i][j].getAnt());
+
+					if (tempAntList != null && tempAntList.size() > 0) {
+						for (Ant a : tempAntList) {
+							a.setMoved(false);
 						}
 					}
 				}
