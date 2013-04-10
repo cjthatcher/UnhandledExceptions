@@ -6,8 +6,8 @@ public class GroundCell {
 	Position position;
 	
 	List<Pheromone> pheromoneList = new ArrayList<Pheromone>();
-	FoodPile foodPile;
-	Nest nest;
+	FoodPile foodPile = null;
+	Nest nest = null;
 	List<Ant> antList = new ArrayList<Ant>();
 	
 	public GroundCell(Position p)
@@ -46,7 +46,9 @@ public class GroundCell {
 	{
 		Colony tempColony = p.getColony();
 		
-		for (Pheromone phero : pheromoneList)
+		List<Pheromone> tempPList = new ArrayList<Pheromone>(pheromoneList);
+		
+		for (Pheromone phero : tempPList)
 		{
 			if (phero.getColony() == tempColony)
 			{

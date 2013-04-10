@@ -5,7 +5,7 @@ public class FoodPile {
     
     public FoodPile(int amount)
     {
-        foodAmount = amount;
+        this.foodAmount = amount;
     }
     
     public int getFoodAmount()

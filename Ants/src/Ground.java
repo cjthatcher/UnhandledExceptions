@@ -6,30 +6,61 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+
 import javax.swing.Timer;
 
-public class Ground {
+public class Ground extends Observable{
 	int width;
 	int height;
 	GroundCell[][] cellArray;
-	ConfigurationClass config;
+	static ConfigurationClass config;
 	static Ground instance;
 	Timer time;
-	int delay=1000; //this is in milliseconds
+	int delay=200; //this is in milliseconds
+	boolean hasObserver = false;
+	
+	public void setFirstObserver(DrawingPane dp)
+	{
+		hasObserver = true;
+		this.addObserver(dp);
+	}
+	
+	public boolean hasObserver()
+	{
+		return hasObserver;
+	}
 	
 	public ConfigurationClass getConfig()
 	{
 		return config;
 	}
 	
+	public static void setConfigurationClass(ConfigurationClass c)
+	{
+		config = c;
+	}
+	
 	public static Ground getInstance()
 	{
+		if (instance != null)
+			return instance;
+		else if (instance == null)
+		{
+			instance = new Ground(config);
+		}
+		
 		return instance;
 	}
 	
-	public void CreateGround(ConfigurationClass config)
+//	public static void CreateGround(ConfigurationClass config)
+//	{
+//		instance = new Ground(config);
+//	}
+	
+	public GroundCell[][] getCellArray()
 	{
-		instance = new Ground(config);
+		return cellArray;
 	}
 	
 	private Ground(ConfigurationClass config)
@@ -38,6 +69,14 @@ public class Ground {
 		this.height = config.getBoardHeight();
 		
 		cellArray = new GroundCell[height][width];
+		
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				cellArray[i][j] = new GroundCell(new Position(j, i));
+			}
+		}
 		
 		int numColonies = config.getNumberOfColonies();
 		int numFood = config.getNumberOfFoodPiles();
@@ -92,18 +131,27 @@ public class Ground {
 			
 			int foodPileSize = config.getAmountOfFoodPerPile();
 			
-			cellArray[x][y].setFoodPile(new FoodPile(foodPileSize));
+			GroundCell gc = cellArray[x][y];
+			
+			FoodPile fp = new FoodPile(foodPileSize);
+			
+			gc.setFoodPile(fp);
+			
+			//cellArray[x][y].setFoodPile(new FoodPile(foodPileSize));
 		}
+		
+		int counter = 0;
 		
 		for(Position p : colonyPositions)
 		{
 			int x = p.getX();
 			int y = p.getY();
 			
-			Nest tempNest = new Nest( new Colony(), cellArray[x][y]);
+			Nest tempNest = new Nest( new Colony(counter++, new Position(x, y)), cellArray[x][y]);
+			
 			for(int i=0;i<config.getStartingAnts();++i)
 			{
-				tempNest.getColony().addAnt();
+				tempNest.getColony().addAnt(cellArray[x][y]);
 			}
 			
 			cellArray[x][y].setNest(tempNest);
@@ -111,6 +159,8 @@ public class Ground {
 
 		time=new Timer(delay, new timeListener());
 		time.start();
+		
+		
 	}
 
 	public Position findStrongestPheromone(Colony col, GroundCell gc, boolean hasFood, Ant ant){
@@ -243,21 +293,38 @@ public class Ground {
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			for(int i=0;i<cellArray.length;++i)
+			for(int i=0;i<height;++i)
 			{
-				for(int j=0;j<cellArray[i].length;++j)
+				for(int j=0;j<width;++j)
 				{
-					for(Pheromone p:cellArray[i][j].getPheromone())
+					List<Pheromone> tempPList = new ArrayList<Pheromone>(cellArray[i][j].getPheromone());
+					
+					if (tempPList != null && tempPList.size() > 0)
 					{
-						p.agePheromone();
+						for(Pheromone p:tempPList)
+						{
+							p.agePheromone();
+						}
 					}
-					for(Ant a:cellArray[i][j].getAnt())
+					
+					List<Ant> tempAntList = new ArrayList<Ant>(cellArray[i][j].getAnt());
+					
+					if (tempAntList != null && tempAntList.size() > 0)
 					{
-						a.moveDirection();
+						for(Ant a:tempAntList)
+						{
+							a.moveDirection();
+						}
 					}
 				}
 			}
+			
+			System.out.println("Timer hit!");
+			
+			setChanged();
+			notifyObservers();
 		}
+		
 	}
 }
 

@@ -14,6 +14,7 @@ public class Ant {
 		this.gc = gc;
 		this.col = col;
 		visited=new ArrayList<Position>();
+		gc.addAnt(this);
 	}
 	
 	public List<Position> getVisited()
@@ -54,7 +55,6 @@ public class Ant {
 	}
 
 	public void moveDirection(){
-		
 		if(food)
 		{
 			visited.add(gc.getPosition());
@@ -74,5 +74,7 @@ public class Ant {
 			food=true;
 			gc.getFoodPile().decrementFood();
 		}
+		
+		System.out.println("Ant moved - new position = " + nextPosition.getY() + ", " + nextPosition.getX());
 	}
 }
