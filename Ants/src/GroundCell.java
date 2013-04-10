@@ -62,6 +62,11 @@ public class GroundCell {
 		return pheromoneList;
 	}
 	
+	public List<Ant> getAnt()
+	{
+		return antList;
+	}
+	
 	public Pheromone getColonyPheromone(Colony c)
 	{
 		for (Pheromone p : pheromoneList)
