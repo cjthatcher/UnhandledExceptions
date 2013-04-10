@@ -17,7 +17,7 @@ public class Main {
 		config.setStartingAnts(1);
 		
 		Ground.setConfigurationClass(config);
-		
+		AntTimer timer=new AntTimer();
 		ViewFrame vf = new ViewFrame();
 		
 		
