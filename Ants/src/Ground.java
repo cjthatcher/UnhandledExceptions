@@ -17,7 +17,7 @@ public class Ground extends Observable {
 	static ConfigurationClass config;
 	static Ground instance;
 	Timer time;
-	int delay = 200; // this is in milliseconds
+	int delay = config.getMillisecondDelay(); // this is in milliseconds
 	boolean hasObserver = false;
 
 	public void setFirstObserver(DrawingPane dp) {
