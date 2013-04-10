@@ -135,12 +135,35 @@ public class Ground {
 				return pherMap.get(strongest);
 			}
 		}
+		else if(pherList.size()==0)
+		{
+			List<Position> temp=getNearby(gc.getPosition());
+			return temp.get((int)(Math.random()*temp.size()));
+		}
 	}
 
 	private Position pathToColony(Ant ant)
 	{
 		Position colPos=ant.getCol().getNest().getGroundCell().getPosition();
 		Position antPos=ant.getLocation().getPosition();
+		Position temp=new Position(antPos.getX(),antPos.getY());
+		if(colPos.getX()>antPos.getX())
+		{
+			temp.setPosition(temp.getX()+1, temp.getY());
+		}
+		else if(colPos.getX()<antPos.getX())
+		{
+			temp.setPosition(temp.getX()-1, temp.getY());
+		}
+		if(colPos.getY()>antPos.getY())
+		{
+			temp.setPosition(temp.getX()+1, temp.getY());
+		}
+		else if(colPos.getY()<antPos.getY())
+		{
+			temp.setPosition(temp.getX()-1, temp.getY());
+		}
+		return temp;
 	}
 	
 	private List<Position> getNearby(Position pos)
