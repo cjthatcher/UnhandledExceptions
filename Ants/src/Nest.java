@@ -13,4 +13,9 @@ public class Nest {
 	{
 		return itsGroundCell;
 	}
+	
+	public Colony getColony()
+	{
+		return itsColony;
+	}
 }
