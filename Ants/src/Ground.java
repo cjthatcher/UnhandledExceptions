@@ -1,8 +1,11 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.Timer;
 
 public class Ground {
 	int width;
@@ -10,6 +13,8 @@ public class Ground {
 	GroundCell[][] cellArray;
 	ConfigurationClass config;
 	static Ground instance;
+	Timer time;
+	int delay=1000; //this is in milliseconds
 	
 	public static Ground getInstance()
 	{
@@ -58,7 +63,7 @@ public class Ground {
 		
 		cellArray = new GroundCell[height][width];
 
-		
+		time=new Timer(delay, new timeListener());
 	}
 
 	public Position findStrongestPheromone(Colony col, GroundCell gc, boolean hasFood){
@@ -123,6 +128,27 @@ public class Ground {
 
 	private Pheromone checkForPheromone(int x, int y, Colony col){
 		return cellArray[x][y].getColonyPheromone(col);
+	}
+	
+	private class timeListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			for(int i=0;i<cellArray.length;++i)
+			{
+				for(int j=0;j<cellArray[i].length;++j)
+				{
+					for(Pheromone p:cellArray[i][j].getPheromone())
+					{
+						p.agePheromone();
+					}
+					for(Ant a:cellArray[i][j].getAnt())
+					{
+						a.moveDirection();
+					}
+				}
+			}
+		}
 	}
 }
 
