@@ -26,6 +26,36 @@ public class Ground {
 		this.width = config.getBoardWidth();
 		this.height = config.getBoardHeight();
 		
+		int numColonies = config.getNumberOfColonies();
+		int numFood = config.getNumberOfFoodPiles();
+		
+		List<Position> colonyPositions = new ArrayList<Position>();
+		
+		while(colonyPositions.size() < numColonies)
+		{
+			int x = (int)(Math.random() * config.getBoardWidth());
+			int y = (int)(Math.random() * config.getBoardHeight());
+			
+			Position position = new Position(x, y);
+			
+			boolean inList = false;
+			
+			for(int i=0; i<colonyPositions.size(); ++i)
+			{
+				Position temp = colonyPositions.get(i);
+				if( temp.x == position.x && temp.y == position.y)
+				{
+					inList = true;
+				}
+			}
+			
+			if(inList == false)
+			{
+				colonyPositions.add(position);
+			}
+			
+		}
+		
 		cellArray = new GroundCell[height][width];
 
 		
