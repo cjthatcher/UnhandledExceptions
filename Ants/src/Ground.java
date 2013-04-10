@@ -90,7 +90,7 @@ public class Ground {
 		}
 		
 		//Make a comparator here.
-		Arrays.sort(pherList);
+		Arrays.sort(pherList, new PheromoneComparator());
 		if(pherList.size() >= 2){
 			if(hasFood){
 				Pheromone strongest = pherList.get(1);
