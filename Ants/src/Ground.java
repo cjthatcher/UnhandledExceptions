@@ -17,6 +17,11 @@ public class Ground {
 	Timer time;
 	int delay=1000; //this is in milliseconds
 	
+	public ConfigurationClass getConfig()
+	{
+		return config;
+	}
+	
 	public static Ground getInstance()
 	{
 		return instance;
@@ -32,10 +37,14 @@ public class Ground {
 		this.width = config.getBoardWidth();
 		this.height = config.getBoardHeight();
 		
+		cellArray = new GroundCell[height][width];
+		
 		int numColonies = config.getNumberOfColonies();
 		int numFood = config.getNumberOfFoodPiles();
 		
 		List<Position> colonyPositions = new ArrayList<Position>();
+		List<Position> foodPositions = new ArrayList<Position>();
+		
 		
 		while(colonyPositions.size() < numColonies)
 		{
@@ -62,7 +71,39 @@ public class Ground {
 			
 		}
 		
-		cellArray = new GroundCell[height][width];
+		while(foodPositions.size() < numFood)
+		{
+			int x = (int)(Math.random() * config.getBoardWidth());
+			int y = (int)(Math.random() * config.getBoardHeight());
+			
+			Position position = new Position(x, y);
+			
+			if(!foodPositions.contains(position))
+			{
+				foodPositions.add(position);
+			}
+			
+		}
+		
+		for(Position p : foodPositions)
+		{
+			int x = p.getX();
+			int y = p.getY();
+			
+			int foodPileSize = config.getAmountOfFoodPerPile();
+			
+			cellArray[x][y].setFoodPile(new FoodPile(foodPileSize));
+		}
+		
+		for(Position p : colonyPositions)
+		{
+			int x = p.getX();
+			int y = p.getY();
+			
+			Nest tempNest = new Nest( new Colony(), cellArray[x][y]);
+			
+			cellArray[x][y].setNest(tempNest);
+		}
 
 		time=new Timer(delay, new timeListener());
 	}

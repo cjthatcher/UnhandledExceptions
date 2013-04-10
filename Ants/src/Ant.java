@@ -59,6 +59,7 @@ public class Ant {
 		if(food)
 		{
 			visited.add(gc.getPosition());
+			gc.addPheromone(new Pheromone(col, Ground.getInstance().getConfig().getPheromoneStrength(), gc));
 		}
 		
 		Ground ground = Ground.getInstance();
