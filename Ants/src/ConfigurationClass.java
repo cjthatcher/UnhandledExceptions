@@ -8,7 +8,7 @@ public class ConfigurationClass {
 	float degreeOfRandomness;
 	int antLifeSpan;
 	int antBirthRate;
-	int pheromoneDecayRate;
+	int pheromoneStrength;
 	int millisecondDelay;
 	
 	public int getMillisecondDelay() {
@@ -65,11 +65,11 @@ public class ConfigurationClass {
 	public void setAntBirthRate(int antBirthRate) {
 		this.antBirthRate = antBirthRate;
 	}
-	public int getPheromoneDecayRate() {
-		return pheromoneDecayRate;
+	public int getPheromoneStrength() {
+		return pheromoneStrength;
 	}
-	public void setPheromoneDecayRate(int pheromoneDecayRate) {
-		this.pheromoneDecayRate = pheromoneDecayRate;
+	public void setPheromoneStrength(int pheromoneStrength) {
+		this.pheromoneStrength = pheromoneStrength;
 	}
 
 }
