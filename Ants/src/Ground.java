@@ -106,6 +106,7 @@ public class Ground {
 		}
 
 		time=new Timer(delay, new timeListener());
+		time.start();
 	}
 
 	public Position findStrongestPheromone(Colony col, GroundCell gc, boolean hasFood, Ant ant){
