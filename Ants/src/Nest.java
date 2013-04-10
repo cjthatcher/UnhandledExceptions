@@ -8,4 +8,14 @@ public class Nest {
 		this.itsGroundCell = gc;
 		this.itsColony = c;
 	}
+	
+	public GroundCell getGroundCell()
+	{
+		return itsGroundCell;
+	}
+	
+	public Colony getColony()
+	{
+		return itsColony;
+	}
 }

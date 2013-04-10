@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Ant {
 
@@ -5,12 +8,18 @@ public class Ant {
 	private Colony col;
 	private Direction dir;
 	private  boolean food;
-
+	private List<Position> visited;
 
 	public Ant(Colony col, GroundCell gc, Direction dir){
 		this.gc = gc;
 		this.col = col;
 		this.dir = dir;
+		visited=new ArrayList<Position>();
+	}
+	
+	public List<Position> getVisited()
+	{
+		return visited;
 	}
 	
 	public GroundCell getLocation() {
@@ -46,6 +55,12 @@ public class Ant {
 	}
 
 	public void moveDirection(){
+		
+		if(food)
+		{
+			visited.add(gc.getPosition());
+		}
+		
 		Ground ground = Ground.getInstance();
 		
 		Position nextPosition = ground.findStrongestPheromone(col, gc, food);

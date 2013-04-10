@@ -83,7 +83,7 @@ public class Ground {
 		time=new Timer(delay, new timeListener());
 	}
 
-	public Position findStrongestPheromone(Colony col, GroundCell gc, boolean hasFood){
+	public Position findStrongestPheromone(Colony col, GroundCell gc, boolean hasFood, Ant ant){
 		int orig_x = gc.getPosition().getX();
 		int orig_y = gc.getPosition().getY();
 		List<Pheromone> pherList = new ArrayList<Pheromone>();
@@ -137,12 +137,74 @@ public class Ground {
 			
 			if(hasFood){
 			//No pheromones? Take an 80% chance towards home
+				List<Position> temp=getNearby(gc.getPosition());
+				for(int i=0;i<temp.size();++i)
+				{
+					if(!ant.getVisited().contains(temp.get(i)))
+					{
+						return temp.get(i);
+					}
+				}
+				return pathToColony(ant);
 			}else{
-
+				Pheromone strongest = pherList.get(0);
+				return pherMap.get(strongest);
 			}
+		}
+		else if(pherList.size()==0)
+		{
+			List<Position> temp=getNearby(gc.getPosition());
+			return temp.get((int)(Math.random()*temp.size()));
 		}
 	}
 
+	private Position pathToColony(Ant ant)
+	{
+		Position colPos=ant.getCol().getNest().getGroundCell().getPosition();
+		Position antPos=ant.getLocation().getPosition();
+		Position temp=new Position(antPos.getX(),antPos.getY());
+		if(colPos.getX()>antPos.getX())
+		{
+			temp.setPosition(temp.getX()+1, temp.getY());
+		}
+		else if(colPos.getX()<antPos.getX())
+		{
+			temp.setPosition(temp.getX()-1, temp.getY());
+		}
+		if(colPos.getY()>antPos.getY())
+		{
+			temp.setPosition(temp.getX()+1, temp.getY());
+		}
+		else if(colPos.getY()<antPos.getY())
+		{
+			temp.setPosition(temp.getX()-1, temp.getY());
+		}
+		return temp;
+	}
+	
+	private List<Position> getNearby(Position pos)
+	{
+		List<Position> temp=new ArrayList<Position>();
+		for(int i = -1; i <= 1; ++i){
+			int temp_x = pos.getX() + i;
+			if(temp_x < 0 || temp_x >= width)
+				continue;
+			else{
+				for(int j = -1; j <= 1; ++j){
+					int temp_y = pos.getY() + j;
+					if(temp_y < 0 || temp_y >= height){
+						continue;
+					}else if(temp_x == pos.getX() && temp_y == pos.getY()){
+						continue;
+					}else{
+						temp.add(new Position(temp_x, temp_y));
+					}
+				}
+			}
+		}
+		return temp;
+	}
+	
 	private Pheromone checkForPheromone(int x, int y, Colony col){
 		return cellArray[x][y].getColonyPheromone(col);
 	}
