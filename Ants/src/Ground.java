@@ -113,13 +113,13 @@ public class Ground extends Observable {
 
 			int foodPileSize = config.getAmountOfFoodPerPile();
 
-			GroundCell gc = cellArray[x][y];
+			GroundCell gc = cellArray[y][x];
 
 			FoodPile fp = new FoodPile(foodPileSize);
 
 			gc.setFoodPile(fp);
 
-			// cellArray[x][y].setFoodPile(new FoodPile(foodPileSize));
+			// cellArray[y][x].setFoodPile(new FoodPile(foodPileSize));
 		}
 
 		int counter = 0;
@@ -129,13 +129,13 @@ public class Ground extends Observable {
 			int y = p.getY();
 
 			Nest tempNest = new Nest(new Colony(counter++, new Position(x, y)),
-					cellArray[x][y]);
+					cellArray[y][x]);
 
 			for (int i = 0; i < config.getStartingAnts(); ++i) {
-				tempNest.getColony().addAnt(cellArray[x][y]);
+				tempNest.getColony().addAnt(cellArray[y][x]);
 			}
 
-			cellArray[x][y].setNest(tempNest);
+			cellArray[y][x].setNest(tempNest);
 		}
 
 		time = new Timer(delay, new timeListener());
