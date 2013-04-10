@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class Ground {
 		}
 		
 		//Make a comparator here.
-		Arrays.sort(pherList, new PheromoneComparator());
+		Collections.sort(pherList, new PheromoneComparator());
 		if(pherList.size() >= 2){
 			if(hasFood){
 				Pheromone strongest = pherList.get(1);
