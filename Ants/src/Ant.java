@@ -10,10 +10,9 @@ public class Ant {
 	private  boolean food;
 	private List<Position> visited;
 
-	public Ant(Colony col, GroundCell gc, Direction dir){
+	public Ant(Colony col, GroundCell gc){
 		this.gc = gc;
 		this.col = col;
-		this.dir = dir;
 		visited=new ArrayList<Position>();
 	}
 	

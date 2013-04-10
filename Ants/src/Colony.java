@@ -19,5 +19,10 @@ public class Colony {
 	public void setNest(Nest nest) {
 		this.nest = nest;
 	}
+	
+	public void addAnt()
+	{
+		ants.add(new Ant(this, nest.getGroundCell()));
+	}
 
 }

@@ -10,6 +10,7 @@ public class ConfigurationClass {
 	int antBirthRate;
 	int pheromoneStrength;
 	int millisecondDelay;
+	int startingAnts;
 	
 	public int getMillisecondDelay() {
 		return millisecondDelay;
@@ -70,6 +71,16 @@ public class ConfigurationClass {
 	}
 	public void setPheromoneStrength(int pheromoneStrength) {
 		this.pheromoneStrength = pheromoneStrength;
+	}
+	
+	public void setStartingAnts(int num)
+	{
+		startingAnts=num;
+	}
+	
+	public int getStartingAnts()
+	{
+		return startingAnts;
 	}
 
 }

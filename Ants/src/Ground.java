@@ -101,6 +101,10 @@ public class Ground {
 			int y = p.getY();
 			
 			Nest tempNest = new Nest( new Colony(), cellArray[x][y]);
+			for(int i=0;i<config.getStartingAnts();++i)
+			{
+				tempNest.getColony().addAnt();
+			}
 			
 			cellArray[x][y].setNest(tempNest);
 		}
