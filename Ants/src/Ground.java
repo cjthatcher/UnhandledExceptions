@@ -151,7 +151,7 @@ public class Ground {
 				return pherMap.get(strongest);
 			}
 		}
-		else if(pherList.size()==0)
+		else
 		{
 			List<Position> temp=getNearby(gc.getPosition());
 			return temp.get((int)(Math.random()*temp.size()));

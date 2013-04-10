@@ -63,7 +63,7 @@ public class Ant {
 		
 		Ground ground = Ground.getInstance();
 		
-		Position nextPosition = ground.findStrongestPheromone(col, gc, food);
+		Position nextPosition = ground.findStrongestPheromone(col, gc, food, this);
 		
 		gc.loseAnt(this);
 		
