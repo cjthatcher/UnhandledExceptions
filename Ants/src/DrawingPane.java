@@ -63,8 +63,11 @@ public class DrawingPane extends JPanel implements Observer{
 			{
 				
 				//Draw the grey box
-				g2d.setColor(Color.DARK_GRAY);
+				g2d.setColor(Color.gray);
 				g2d.fillRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+				
+				g2d.setColor(Color.black);
+				g2d.drawRect(x * boxWidth, y * boxHeight, boxWidth, boxHeight);
 				
 				
 				//If it has a hive, draw that
@@ -92,7 +95,7 @@ public class DrawingPane extends JPanel implements Observer{
 					for (Ant a : gcArray[y][x].getAnt())
 					{
 						g2d.setColor(colorMap.get(a.getCol().getIdNumber()));
-						g2d.fillRect(x * boxWidth, y * boxHeight, boxWidth / 2, boxHeight / 2);
+						g2d.fillOval((x * boxWidth), (y * boxHeight),(int) (boxWidth * 0.7), (int)(boxHeight * 0.7));
 						
 						if (a.isCarryingFood())
 						{

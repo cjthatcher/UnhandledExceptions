@@ -37,5 +37,10 @@ public class Colony {
 	{
 		return idNumber;
 	}
+	
+	public Position getPosition()
+	{
+		return position;
+	}
 
 }

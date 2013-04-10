@@ -55,6 +55,18 @@ public class Ant {
 	}
 
 	public void moveDirection(){
+		Position p = gc.getPosition();
+		
+		int antX = p.getX();
+		int antY = p.getY();
+		
+		//Ant has food, is dropping it off
+		if (food && antX == col.getPosition().getX() && antY == col.getPosition().getY())
+		{
+			food = false;
+			visited.clear();
+		}
+		
 		if(food)
 		{
 			visited.add(gc.getPosition());
