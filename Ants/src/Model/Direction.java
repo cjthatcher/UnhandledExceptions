@@ -1,3 +1,4 @@
+package Model;
 public class Direction {
 	int x;
 	int y;

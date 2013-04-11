@@ -1,11 +1,15 @@
+package View;
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
 
 public class ViewFrame extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8931971865490053891L;
 	DrawingPane thisDrawingPane;
 	final int WIDTH = 840;
 	final int HEIGHT = 860;

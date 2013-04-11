@@ -1,3 +1,4 @@
+package Controller;
 
 public class ConfigurationClass {
 	int boardWidth;

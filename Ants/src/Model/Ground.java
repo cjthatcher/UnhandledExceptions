@@ -1,12 +1,12 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package Model;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
+
+import Controller.ConfigurationClass;
+import View.DrawingPane;
 
 public class Ground extends Observable {
 	int width;

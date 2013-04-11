@@ -1,8 +1,8 @@
+package View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.Collections;
@@ -14,8 +14,18 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import Model.Ant;
+import Model.Ground;
+import Model.GroundCell;
+import Model.Pheromone;
+import Model.PheromoneComparator;
+
 
 public class DrawingPane extends JPanel implements Observer{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5093448193919030012L;
 	Font defaultFont;
 	Ground ground;
 	final int WIDTH;
