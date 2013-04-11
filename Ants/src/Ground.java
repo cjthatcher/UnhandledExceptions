@@ -43,11 +43,6 @@ public class Ground extends Observable {
 		return instance;
 	}
 
-	// public static void CreateGround(ConfigurationClass config)
-	// {
-	// instance = new Ground(config);
-	// }
-
 	public GroundCell[][] getCellArray() {
 		return cellArray;
 	}
@@ -58,6 +53,7 @@ public class Ground extends Observable {
 
 		cellArray = new GroundCell[height][width];
 
+		//sets up GroundCells 
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				cellArray[i][j] = new GroundCell(new Position(j, i));
@@ -69,7 +65,8 @@ public class Ground extends Observable {
 
 		List<Position> colonyPositions = new ArrayList<Position>();
 		List<Position> foodPositions = new ArrayList<Position>();
-
+		
+		//sets up Colonies
 		while (colonyPositions.size() < numColonies) {
 			int x = (int) (Math.random() * config.getBoardWidth());
 			int y = (int) (Math.random() * config.getBoardHeight());
@@ -91,6 +88,7 @@ public class Ground extends Observable {
 
 		}
 
+		//sets food piles
 		while (foodPositions.size() < numFood) {
 			int x = (int) (Math.random() * config.getBoardWidth());
 			int y = (int) (Math.random() * config.getBoardHeight());
@@ -135,6 +133,7 @@ public class Ground extends Observable {
 		}
 	}
 
+	//returns next direction for ant
 	public Position findStrongestPheromone(Ant ant)
 	{
 		List<Pheromone> pheromoneList=nearbyPheromone(ant);
@@ -178,6 +177,7 @@ public class Ground extends Observable {
 		}
 	}
 	
+	//returns a list of pheromones in nearby GroundCells
 	private List<Pheromone> nearbyPheromone(Ant ant)
 	{
 		List<Pheromone> pheromoneList=new ArrayList<Pheromone>();
@@ -202,6 +202,7 @@ public class Ground extends Observable {
 		return pheromoneList;
 	}
 	
+	//returns a GroundCell that is the next step towards the ant's colony
 	private Position pathToColony(Ant ant) {
 		Position colPos = ant.getCol().getPosition();
 		Position antPos = ant.getLocation().getPosition();
@@ -222,6 +223,7 @@ public class Ground extends Observable {
 		return temp;
 	}
 
+	//returns a list of nearby GroundCells
 	private List<Position> getNearby(Position pos) 
 	{
 		List<Position> temp = new ArrayList<Position>();
@@ -239,6 +241,7 @@ public class Ground extends Observable {
 		return temp;
 	}
 
+	//moves every any and ages every pheromone
 	public void updateGround() {
 		for (int i = 0; i < height; ++i) {
 			for (int j = 0; j < width; ++j) {
