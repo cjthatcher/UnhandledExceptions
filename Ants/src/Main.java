@@ -7,20 +7,19 @@ public class Main {
 		config.setAmountOfFoodPerPile(4);
 		config.setAntBirthRate(100);
 		config.setAntLifeSpan(500);
-		config.setBoardHeight(4);
-		config.setBoardWidth(4);
-		config.setDegreeOfRandomness(0.8f);
-		config.setMillisecondDelay(500);
-		config.setNumberOfColonies(1);
-		config.setNumberOfFoodPiles(1);
-		config.setPheromoneStrength(30);
-		config.setStartingAnts(1);
+		config.setBoardHeight(40);
+		config.setBoardWidth(40);
+		config.setDegreeOfRandomness(0.5f);
+		config.setMillisecondDelay(50);
+		config.setNumberOfColonies(4);
+		config.setNumberOfFoodPiles(25);
+		config.setPheromoneStrength(50);
+		config.setStartingAnts(5);
 		
 		Ground.setConfigurationClass(config);
 		
 		ViewFrame vf = new ViewFrame();
 		
-		
-		
+	
 	}
 }
