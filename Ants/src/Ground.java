@@ -8,16 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import javax.swing.Timer;
-
 public class Ground extends Observable {
 	int width;
 	int height;
 	GroundCell[][] cellArray;
 	static ConfigurationClass config;
 	static Ground instance;
-	Timer time;
-	int delay = config.getMillisecondDelay(); // this is in milliseconds
 	boolean hasObserver = false;
 
 	public void setFirstObserver(DrawingPane dp) {
@@ -47,11 +43,6 @@ public class Ground extends Observable {
 		return instance;
 	}
 
-	// public static void CreateGround(ConfigurationClass config)
-	// {
-	// instance = new Ground(config);
-	// }
-
 	public GroundCell[][] getCellArray() {
 		return cellArray;
 	}
@@ -62,6 +53,7 @@ public class Ground extends Observable {
 
 		cellArray = new GroundCell[height][width];
 
+		//sets up GroundCells 
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				cellArray[i][j] = new GroundCell(new Position(j, i));
@@ -73,7 +65,8 @@ public class Ground extends Observable {
 
 		List<Position> colonyPositions = new ArrayList<Position>();
 		List<Position> foodPositions = new ArrayList<Position>();
-
+		
+		//sets up Colonies
 		while (colonyPositions.size() < numColonies) {
 			int x = (int) (Math.random() * config.getBoardWidth());
 			int y = (int) (Math.random() * config.getBoardHeight());
@@ -95,6 +88,7 @@ public class Ground extends Observable {
 
 		}
 
+		//sets food piles
 		while (foodPositions.size() < numFood) {
 			int x = (int) (Math.random() * config.getBoardWidth());
 			int y = (int) (Math.random() * config.getBoardHeight());
@@ -137,12 +131,9 @@ public class Ground extends Observable {
 
 			cellArray[y][x].setNest(tempNest);
 		}
-
-		time = new Timer(delay, new timeListener());
-		time.start();
-
 	}
 
+	//returns next direction for ant
 	public Position findStrongestPheromone(Ant ant)
 	{
 		List<Pheromone> pheromoneList=nearbyPheromone(ant);
@@ -186,6 +177,7 @@ public class Ground extends Observable {
 		}
 	}
 	
+	//returns a list of pheromones in nearby GroundCells
 	private List<Pheromone> nearbyPheromone(Ant ant)
 	{
 		List<Pheromone> pheromoneList=new ArrayList<Pheromone>();
@@ -210,6 +202,7 @@ public class Ground extends Observable {
 		return pheromoneList;
 	}
 	
+	//returns a GroundCell that is the next step towards the ant's colony
 	private Position pathToColony(Ant ant) {
 		Position colPos = ant.getCol().getPosition();
 		Position antPos = ant.getLocation().getPosition();
@@ -230,6 +223,7 @@ public class Ground extends Observable {
 		return temp;
 	}
 
+	//returns a list of nearby GroundCells
 	private List<Position> getNearby(Position pos) 
 	{
 		List<Position> temp = new ArrayList<Position>();
@@ -247,52 +241,50 @@ public class Ground extends Observable {
 		return temp;
 	}
 
-	private class timeListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			for (int i = 0; i < height; ++i) {
-				for (int j = 0; j < width; ++j) {
-					List<Pheromone> tempPList = new ArrayList<Pheromone>(
-							cellArray[i][j].getPheromone());
+	//moves every any and ages every pheromone
+	public void updateGround() {
+		for (int i = 0; i < height; ++i) {
+			for (int j = 0; j < width; ++j) {
+				List<Pheromone> tempPList = new ArrayList<Pheromone>(
+						cellArray[i][j].getPheromone());
 
-					if (tempPList != null && tempPList.size() > 0) {
-						for (Pheromone p : tempPList) {
-							p.agePheromone();
-						}
+				if (tempPList != null && tempPList.size() > 0) {
+					for (Pheromone p : tempPList) {
+						p.agePheromone();
 					}
+				}
 
-					List<Ant> tempAntList = new ArrayList<Ant>(
-							cellArray[i][j].getAnt());
+				List<Ant> tempAntList = new ArrayList<Ant>(
+						cellArray[i][j].getAnt());
 
-					if (tempAntList != null && tempAntList.size() > 0) {
-						for (Ant a : tempAntList) {
-							if(!a.getMoved())
-							{
-								a.moveDirection();
-								a.setMoved(true);
-							}
+				if (tempAntList != null && tempAntList.size() > 0) {
+					for (Ant a : tempAntList) {
+						if(!a.getMoved())
+						{
+							a.moveDirection();
+							a.setMoved(true);
 						}
 					}
 				}
 			}
-			for (int i = 0; i < height; ++i) {
-				for (int j = 0; j < width; ++j) {
-					
-					List<Ant> tempAntList = new ArrayList<Ant>(
-							cellArray[i][j].getAnt());
+		}
+		for (int i = 0; i < height; ++i) {
+			for (int j = 0; j < width; ++j) {
+				
+				List<Ant> tempAntList = new ArrayList<Ant>(
+						cellArray[i][j].getAnt());
 
-					if (tempAntList != null && tempAntList.size() > 0) {
-						for (Ant a : tempAntList) {
-							a.setMoved(false);
-						}
+				if (tempAntList != null && tempAntList.size() > 0) {
+					for (Ant a : tempAntList) {
+						a.setMoved(false);
 					}
 				}
 			}
-
-			System.out.println("Timer hit!");
-
-			setChanged();
-			notifyObservers();
 		}
 
+		System.out.println("Timer hit!");
+
+		setChanged();
+		notifyObservers();
 	}
 }
