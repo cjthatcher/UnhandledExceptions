@@ -10,6 +10,8 @@ public class MovementTests {
 
 	ConfigurationClass configTest=new ConfigurationClass();
 	
+	//tests for Colonies and Nests being placed properly
+	//mainly tests Colony and Nest initializaion in ground constructor
 	@Test
 	public void getColonyPosition() {
 		configTest.setBoardWidth(4);
@@ -23,6 +25,8 @@ public class MovementTests {
 		assert(nest.getGroundCell().getPosition().getX()==2&&nest.getGroundCell().getPosition().getY()==2);
 	}
 	
+	//tests for Ants being placed properly
+	//mainly tests Colony's addAnt function
 	@Test
 	public void getAntPosition() {
 		configTest.setBoardWidth(4);
@@ -36,6 +40,8 @@ public class MovementTests {
 		assert(nest.getColony().getAnts().get(0).getLocation()==gc);
 	}
 
+	//tests for GroundCell having a correct list of ants
+	//mainly tests GroundCell's getAnt function
 	@Test
 	public void getAntList() {
 		configTest.setBoardWidth(4);
@@ -51,6 +57,8 @@ public class MovementTests {
 		assert(gc.getAnt().size()==3);
 	}
 	
+	//tests to make sure Ants move from the cell they were initially on
+	//mainly tests Ant's moveDirection function
 	@Test
 	public void testAntMovement() {
 		configTest.setBoardWidth(4);
@@ -73,6 +81,8 @@ public class MovementTests {
 		assert(gc.getAnt().size()==0);
 	}
 	
+	//tests to make sure Ants move to Pheromones correctly
+	//mainly tests Ground's findStrongestPheromone function, by way of moveDirection
 	@Test
 	public void testPheromoneMovement() {
 		configTest.setBoardWidth(4);
