@@ -7,14 +7,14 @@ public class Main {
 		config.setAmountOfFoodPerPile(4);
 		config.setAntBirthRate(100);
 		config.setAntLifeSpan(500);
-		config.setBoardHeight(40);
-		config.setBoardWidth(40);
+		config.setBoardHeight(20);
+		config.setBoardWidth(20);
 		config.setDegreeOfRandomness(0.5f);
 		config.setMillisecondDelay(50);
 		config.setNumberOfColonies(4);
-		config.setNumberOfFoodPiles(25);
-		config.setPheromoneStrength(50);
-		config.setStartingAnts(5);
+		config.setNumberOfFoodPiles(10);
+		config.setPheromoneStrength(35);
+		config.setStartingAnts(2);
 		
 		Ground.setConfigurationClass(config);
 		AntTimer timer=new AntTimer();

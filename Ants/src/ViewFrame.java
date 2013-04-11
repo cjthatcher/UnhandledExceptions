@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 public class ViewFrame extends JFrame{
 	
 	DrawingPane thisDrawingPane;
-	final int WIDTH = 820;
-	final int HEIGHT = 820;
+	final int WIDTH = 840;
+	final int HEIGHT = 860;
 	
 	public ViewFrame()
 	{
